@@ -27,7 +27,7 @@ export const UserCreateForm = () => {
 				<h2 className='font-extrabold text-2xl uppercase text-center w-full'>Đăng ký</h2>
 			</div>
 			<form
-				className='flex flex-col gap-4 w-1/3 m-auto bg-blue-600 p-10 my-4'
+				className='flex flex-col gap-4 lg:w-1/3 m-auto bg-blue-600 p-10 my-4'
 				onSubmit={handleSubmit(onSubmit)}>
         {/* Name */}
         	<h3 className='text-sm text-white font-semibold'>ID</h3>

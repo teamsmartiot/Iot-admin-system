@@ -5,7 +5,7 @@
 
 /* Import external CSS */
 /* Custom styling for semi-table header */
-.semi-table-header {
+th {
 	background-color: #2563eb !important; /* Ensure the background color applies */
 	color: white !important; /* Ensure the text color is white */
 }

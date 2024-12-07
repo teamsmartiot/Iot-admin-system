@@ -1,9 +1,9 @@
 "use client";
 import { getHistory } from "@/api/history";
 import { IconLoading } from "@douyinfe/semi-icons";
-import { Button, Table } from "@douyinfe/semi-ui";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
+import { Button, Table } from "antd";
 import { useMemo } from "react";
 import * as XLSX from "xlsx";
 
@@ -56,8 +56,6 @@ export const TableManageUser = () => {
 		queryFn: async () => await getHistory(),
 	});
 
-	const scroll = useMemo(() => ({ y: "80vh" }), []);
-
 	const downloadExcel = (data: any) => {
 		const worksheet = XLSX.utils.json_to_sheet(data);
 		const workbook = XLSX.utils.book_new();
@@ -71,27 +69,18 @@ export const TableManageUser = () => {
 		<div className='h-full flex flex-col gap-2 p-4'>
 			<div className='flex justify-between'>
 				<h2 className='font-extrabold text-2xl uppercase'>Quản lý người dùng</h2>
-				<Button
+				<button
 					onClick={() => downloadExcel(data)}
-					type='primary'
-					className='bg-blue-600 w-fit !text-white ml-auto hover:!bg-blue-800 transition-colors duration-100 ease-in rounded-sm'>
+					className='bg-blue-600 w-fit px-2 text-sm font-semibold !text-white ml-auto hover:!bg-blue-800 transition-colors duration-100 ease-in rounded-sm'>
 					Export Excel
-				</Button>
+				</button>
 			</div>
-			{isPending && (
-				<div className='flex-1 justify-center flex items-center '>
-					<IconLoading className='animate-spin' />
-				</div>
-			)}
-			{!isPending && (
-				<Table
-					loading={isPending}
-					className='flex-1'
-					columns={columns}
-          dataSource={data}
-					scroll={scroll}
-				/>
-			)}
+			<Table
+				loading={isPending}
+				className='flex-1'
+				columns={columns}
+				dataSource={data?.map((item: any) => ({ key: Date.now(), ...item }))}
+			/>
 		</div>
 	);
 };
