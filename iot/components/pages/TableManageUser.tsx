@@ -1,83 +1,62 @@
 "use client";
-import React, { useState, useMemo, useEffect } from "react";
-import { Table, Avatar, Button } from "@douyinfe/semi-ui";
-import * as dateFns from "date-fns";
+import { getHistory } from "@/api/history";
+import { IconLoading } from "@douyinfe/semi-icons";
+import { Button, Table } from "@douyinfe/semi-ui";
+import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
+import { useMemo } from "react";
 import * as XLSX from "xlsx";
 
-const figmaIconUrl =
-	"https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/figma-icon.png";
 const columns: Record<string, any>[] = [
 	{
-		title: "Title",
+		title: "Tên",
 		dataIndex: "name",
-		width: 400,
+	},
+	{
+		title: "Tủ",
+		dataIndex: "cabin",
+	},
+	{
+		title: "ID Vân Tay",
+		dataIndex: "code",
+	},
+	{
+		title: "Giới tính",
+		dataIndex: "gender",
+	},
+	{
+		title: "Email",
+		dataIndex: "email",
+		width: 240,
+	},
+	{
+		title: "Số điện thoại",
+		dataIndex: "mobile",
+	},
 
-		render: (text: string) => {
-			return (
-				<div>
-					<Avatar
-						size='small'
-						shape='square'
-						src={figmaIconUrl}
-						style={{ marginRight: 12 }}></Avatar>
-					{text}
-				</div>
-			);
-		},
+	{
+		title: "Ngày",
+		dataIndex: "date",
+		render: (value: any) => <>{dayjs(value).format("HH:mm:ss - DD/MM/YYYY")}</>,
 	},
 	{
-		title: "Size",
-		dataIndex: "size",
-		sorter: (a: any, b: any) => (a.size - b.size > 0 ? 1 : -1),
-		render: (text: string) => `${text} KB`,
-	},
-	{
-		title: "Owner",
-		dataIndex: "owner",
-		render: (text: string) => {
-			return (
-				<div>
-					<Avatar size='small' style={{ marginRight: 4 }}>
-						{typeof text === "string" && text.slice(0, 1)}
-					</Avatar>
-					{text}
-				</div>
-			);
-		},
-	},
-	{
-		title: "Update",
-		dataIndex: "updateTime",
-		sorter: (a: Record<string, any>, b: Record<string, any>) =>
-			a.updateTime - b.updateTime > 0 ? 1 : -1,
-		render: (value: number) => {
-			return dateFns.format(new Date(value), "yyyy-MM-dd");
-		},
+		title: "Xóa",
+		dataIndex: "action",
+		render: () => (
+			<div>
+				<Button className='bg-red-500 !text-white hover:!bg-red-600 rounded-sm'>Xóa</Button>
+			</div>
+		),
 	},
 ];
 
-const DAY = 24 * 60 * 60 * 1000;
-
 export const TableManageUser = () => {
-	const [dataSource, setData] = useState<any>([]);
+	const { isPending, data } = useQuery({
+		queryKey: ["history"],
+		queryFn: async () => await getHistory(),
+	});
 
 	const scroll = useMemo(() => ({ y: "80vh" }), []);
-	const getData = () => {
-		const data = [];
-		for (let i = 0; i < 46; i++) {
-			const isSemiDesign = i % 2 === 0;
-			const randomNumber = (i * 1000) % 199;
-			data.push({
-				key: "" + i,
-				name: isSemiDesign ? `Semi Design design draft${i}.fig` : `Semi D2C design draft${i}.fig`,
-				owner: isSemiDesign ? "Jiang Pengzhi" : "Hao Xuan",
-				size: randomNumber,
-				updateTime: new Date().valueOf() + randomNumber * DAY,
-				avatarBg: isSemiDesign ? "grey" : "red",
-			});
-		}
-		return data;
-	};
 
 	const downloadExcel = (data: any) => {
 		const worksheet = XLSX.utils.json_to_sheet(data);
@@ -85,25 +64,34 @@ export const TableManageUser = () => {
 		XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 		//let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
 		//XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
-		XLSX.writeFile(workbook, "DataSheet.xlsx");
+		XLSX.writeFile(workbook, "data.xlsx");
 	};
 
-	useEffect(() => {
-		const data = getData();
-		setData(data);
-	}, []);
 	return (
 		<div className='h-full flex flex-col gap-2 p-4'>
 			<div className='flex justify-between'>
 				<h2 className='font-extrabold text-2xl uppercase'>Quản lý người dùng</h2>
 				<Button
-					onClick={() => downloadExcel(dataSource)}
+					onClick={() => downloadExcel(data)}
 					type='primary'
 					className='bg-blue-600 w-fit !text-white ml-auto hover:!bg-blue-800 transition-colors duration-100 ease-in rounded-sm'>
 					Export Excel
 				</Button>
 			</div>
-			<Table className='flex-1' columns={columns} dataSource={dataSource} scroll={scroll} />
+			{isPending && (
+				<div className='flex-1 justify-center flex items-center '>
+					<IconLoading className='animate-spin' />
+				</div>
+			)}
+			{!isPending && (
+				<Table
+					loading={isPending}
+					className='flex-1'
+					columns={columns}
+          dataSource={data}
+					scroll={scroll}
+				/>
+			)}
 		</div>
 	);
 };

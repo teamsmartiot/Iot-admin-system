@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
+import "dayjs/locale/vi";
+dayjs.locale('vi'); // Thiết lập ngôn ngữ tiếng Việt
 
 export const Home = () => {
 	const [time, setTime] = useState("");
@@ -23,13 +25,13 @@ export const Home = () => {
 	}, []);
 
 	return (
-		<div className='h-full bg-gradient-to-r from-white via-blue-400 to-blue-600 flex justify-center items-center'>
-			<div className='bg-white p-8 rounded-lg shadow-lg max-w-lg w-full text-center'>
-				<h1 className='text-4xl font-bold text-gray-800 mb-4'>Trường</h1>
-				<p className='text-xl text-gray-600 mb-8'>Chào mừng bạn đến với trang chủ của chúng tôi!</p>
+		<div className='h-full  bg-gradient-to-r from-white via-blue-400 to-blue-600 flex justify-center items-center'>
+			<div className='bg-white p-8 rounded-lg shadow-lg w-3/4 text-center'>
+				<h1 className='text-4xl font-bold text-gray-800 mb-4'>Trường THPT HÒN ĐẤT - KIÊN GIANG</h1>
+			
 
 				<div className='text-2xl font-mono text-gray-800'>
-					<div className='mb-4'>{date}</div>
+					<div className='mb-4 capitalize font-mono'>{date}</div>
 					<div>{time}</div>
 				</div>
 			</div>
