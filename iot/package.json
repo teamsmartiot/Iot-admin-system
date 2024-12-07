@@ -12,6 +12,7 @@
     "@douyinfe/semi-icons": "^2.71.0",
     "@douyinfe/semi-ui": "^2.71.0",
     "dayjs": "^1.11.13",
+    "mongoose": "^8.8.4",
     "next": "15.0.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
