@@ -1,10 +1,8 @@
 "use client";
 import { getHistory } from "@/api/history";
-import { IconLoading } from "@douyinfe/semi-icons";
 import { useQuery } from "@tanstack/react-query";
-import dayjs from "dayjs";
 import { Button, Table } from "antd";
-import { useMemo } from "react";
+import dayjs from "dayjs";
 import * as XLSX from "xlsx";
 
 const columns: Record<string, any>[] = [
