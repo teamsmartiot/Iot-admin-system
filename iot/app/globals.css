@@ -9,14 +9,7 @@ th {
 	background-color: #2563eb !important; /* Ensure the background color applies */
 	color: white !important; /* Ensure the text color is white */
 }
-.semi-table-row-head {
-	text-align: center !important;
-}
-.semi-table-row-cell {
-	border: 1px solid rgba(168, 166, 166, 0.703) !important;
-	text-align: center !important;
-  background-color: white !important;
-}
+
 .active {
   background-color: #ffffff !important;
   color: white;

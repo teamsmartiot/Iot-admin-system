@@ -4,9 +4,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 // If loading a variable font, you don't need to specify the font weight
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 
 import "./globals.css";
-import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,14 +22,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<Head>
-				<link
-					rel='stylesheet'
-					href='https://unpkg.com/@douyinfe/semi-ui@2.27.0/dist/css/semi.css'
-				/>
-			</Head>
 			<body className={inter.className}>
-				<LayoutSide>{children}</LayoutSide>
+				<AntdRegistry>
+					{" "}
+					<LayoutSide>{children}</LayoutSide>
+				</AntdRegistry>
 			</body>
 		</html>
 	);
