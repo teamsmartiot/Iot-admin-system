@@ -14,9 +14,9 @@ export const UserCreateForm = () => {
 			await addUser(data).finally(() => setLoading(false));
 			toast.success("Đã thêm", { position: "top-center" });
 			form.resetFields();
-		} catch () {
+		} catch {
 			toast.error("Lỗi thêm", { position: "top-center" });
-        setLoading(false);
+			setLoading(false);
 		}
 	};
 
