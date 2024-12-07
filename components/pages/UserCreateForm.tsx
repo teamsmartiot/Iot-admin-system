@@ -1,24 +1,23 @@
 "use client";
 import { addUser } from "@/api/user";
-import { Button, Input, Select } from "@douyinfe/semi-ui";
-import { Controller, useForm } from "react-hook-form";
+import { Button, Form, Input, Select } from "antd";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
 export const UserCreateForm = () => {
-	const {
-		control,
-		handleSubmit,
-		formState: { errors },
-		reset,
-	} = useForm();
+  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
 
-	const onSubmit = async (data: any) => {
-		await addUser(data)
-			.then(() => {
-				toast.success("Đã thêm", { position: "top-center" });
-				reset();
-			})
-			.catch(() => toast.error("Lỗi thêm", { position: "top-center" }));
+  const onFinish = async (data: any) => {
+    setLoading(true)
+		try {
+			await addUser(data).finally(() => setLoading(false));
+			toast.success("Đã thêm", { position: "top-center" });
+			form.resetFields();
+		} catch (error) {
+			toast.error("Lỗi thêm", { position: "top-center" });
+        setLoading(false);
+		}
 	};
 
 	return (
@@ -26,115 +25,81 @@ export const UserCreateForm = () => {
 			<div className='flex justify-between'>
 				<h2 className='font-extrabold text-2xl uppercase text-center w-full'>Đăng ký</h2>
 			</div>
-			<form
-				className='flex flex-col gap-4 w-1/3 m-auto bg-blue-600 p-10 my-4'
-				onSubmit={handleSubmit(onSubmit)}>
-        {/* Name */}
-        	<h3 className='text-sm text-white font-semibold'>ID</h3>
-				<Controller
+			<Form
+				form={form}
+				onFinish={onFinish}
+				layout='vertical'
+				className='flex flex-col gap-4 lg:w-1/3 !m-auto bg-blue-600 !p-10 my-4'>
+				{/* ID */}
+				<Form.Item
+					label={<span className='text-sm text-white font-semibold'>ID</span>}
 					name='id'
-					control={control}
-					rules={{ required: "ID là bắt buộc" }}
-					render={({ field }) => (
-						<Input
-							className='!bg-gray-200 cursor-not-allowed focus:!bg-gray-200 !rounded-sm font-medium !text-black'
-              {...field}
-              disabled
-						/>
-					)}
-        />
+          rules={[{ required: true, message: "ID là bắt buộc" }]}
         
-				<h3 className='text-sm text-white font-semibold'>Họ tên</h3>
-				<Controller
+        >
+					<Input
+						className='!bg-gray-200 cursor-not-allowed focus:!bg-gray-200 !rounded-sm font-medium !text-black'
+						disabled
+					/>
+				</Form.Item>
+
+				{/* Họ tên */}
+				<Form.Item
+					label={<span className='text-sm text-white font-semibold'>Họ tên</span>}
 					name='name'
-					control={control}
-					rules={{ required: "Họ tên là bắt buộc" }}
-					render={({ field }) => (
-						<Input
-							className='!bg-gray-100 focus:!bg-gray-200 !rounded-sm font-medium !text-black'
-							{...field}
-						/>
-					)}
-				/>
-				{errors.name && <p className='text-red-500 text-sm'>{errors.name.message as string}</p>}
+					rules={[{ required: true, message: "Họ tên là bắt buộc" }]}>
+					<Input className=' font-medium !text-black' />
+				</Form.Item>
 
 				{/* Email */}
-				<h3 className='text-sm text-white font-semibold'>Email</h3>
-				<Controller
+				<Form.Item
+					label={<span className='text-sm text-white font-semibold'>Email</span>}
 					name='email'
-					control={control}
-					rules={{
-						required: "Email là bắt buộc",
-						pattern: {
-							value: /^\S+@\S+$/i,
+					rules={[
+						{ required: true, message: "Email là bắt buộc" },
+						{
+							pattern: /^\S+@\S+$/i,
 							message: "Email không hợp lệ",
 						},
-					}}
-					render={({ field }) => (
-						<Input
-							className='!bg-gray-100 focus:!bg-gray-200 !rounded-sm font-medium !text-black'
-							{...field}
-						/>
-					)}
-				/>
-				{errors.email && <p className='text-red-500 text-sm'>{errors.email.message as string}</p>}
+					]}>
+					<Input className=' font-medium !text-black' />
+				</Form.Item>
 
 				{/* Mobile */}
-				<h3 className='text-sm text-white font-semibold'>Mobile</h3>
-				<Controller
+				<Form.Item
+					label={<span className='text-sm text-white font-semibold'>Mobile</span>}
 					name='mobile'
-					control={control}
-					rules={{
-						required: "Mobile là bắt buộc",
-						pattern: {
-							value: /^\d{10}$/,
+					rules={[
+						{ required: true, message: "Mobile là bắt buộc" },
+						{
+							pattern: /^\d{10}$/,
 							message: "Mobile phải là 10 số",
 						},
-					}}
-					render={({ field }) => (
-						<Input
-							className='!bg-gray-100 focus:!bg-gray-200 !rounded-sm font-medium !text-black'
-							{...field}
-						/>
-					)}
-				/>
-				{errors.mobile && (
-					<p className='text-red-500 text-sm'>{errors.mobile.message as string} </p>
-				)}
+					]}>
+					<Input className=' font-medium !text-black' />
+				</Form.Item>
 
-				{/* Gender */}
-				<h3 className='text-sm text-white font-semibold'>Giới tính</h3>
-				<Controller
+				{/* Giới tính */}
+				<Form.Item
+					label={<span className='text-sm text-white font-semibold'>Giới tính</span>}
 					name='gender'
-					control={control}
-					rules={{ required: "Giới tính là bắt buộc" }}
-					render={({ field }) => (
-						<Select
-							{...field}
-							className='!bg-gray-100 h-8 focus:!bg-gray-200 !rounded-sm font-medium !text-black'>
-							<Select.Option className='!bg-white' value='Nam'>
-								Nam
-							</Select.Option>
-							<Select.Option className='!bg-white' value='Nữ'>
-								Nữ
-							</Select.Option>
-						</Select>
-					)}
-				/>
-				{errors.gender && <p className='text-red-500 text-sm'>{errors.gender.message as string}</p>}
-
-			
-
-			
+					rules={[{ required: true, message: "Giới tính là bắt buộc" }]}>
+					<Select className=' font-medium !text-black'>
+						<Select.Option value='Nam'>Nam</Select.Option>
+						<Select.Option value='Nữ'>Nữ</Select.Option>
+					</Select>
+				</Form.Item>
 
 				{/* Submit Button */}
-				<Button
-					htmlType='submit'
-					onClick={onSubmit}
-					className='bg-white/50 w-fit ml-auto !text-black hover:!bg-white transition-all duration-150 ease-out rounded-sm'>
-					Đăng ký
-				</Button>
-			</form>
+				<Form.Item>
+					<Button
+						loading={loading}
+						htmlType='submit'
+						className='bg-white/50 w-full ml-auto !text-black hover:!bg-white transition-all duration-150 ease-out rounded-sm'>
+						Đăng ký
+					</Button>
+				</Form.Item>
+			</Form>
 		</div>
 	);
 };
