@@ -1,39 +1,44 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { IconLock, IconUnlock } from "@douyinfe/semi-icons";
+import { Button } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/vi";
-dayjs.locale('vi'); // Thiết lập ngôn ngữ tiếng Việt
+import { useState } from "react";
+dayjs.locale("vi"); // Thiết lập ngôn ngữ tiếng Việt
 
 export const Home = () => {
-	const [time, setTime] = useState("");
-	const [date, setDate] = useState("");
+	const [openStates, setOpenStates] = useState([false, true, true, true, true, false]);
 
-	// Hàm để cập nhật giờ và ngày sử dụng Day.js
-	const updateTime = () => {
-		const now = dayjs();
-		const formattedTime = now.format("HH:mm:ss"); // Định dạng thời gian (HH:mm:ss)
-		const formattedDate = now.format("dddd, D MMMM YYYY"); // Định dạng ngày (Thứ, ngày tháng năm)
-
-		setTime(formattedTime);
-		setDate(formattedDate);
+	// Hàm để thay đổi trạng thái đóng/mở của ô tủ
+	const toggleState = (index: number) => {
+		const newStates = [...openStates];
+		newStates[index] = !newStates[index];
+		setOpenStates(newStates);
 	};
 
-	// Cập nhật giờ mỗi giây
-	useEffect(() => {
-		const interval = setInterval(updateTime, 1000);
-		return () => clearInterval(interval); // Dọn dẹp khi component unmount
-	}, []);
-
 	return (
-		<div className='h-full  bg-gradient-to-r from-white via-blue-400 to-blue-600 flex justify-center items-center'>
-			<div className='bg-white p-8 rounded-lg shadow-lg w-3/4 text-center'>
-				<h1 className='text-4xl font-bold text-gray-800 mb-4'>Trường THPT HÒN ĐẤT - KIÊN GIANG</h1>
-			
-
-				<div className='text-2xl font-mono text-gray-800'>
-					<div className='mb-4 capitalize font-mono'>{date}</div>
-					<div>{time}</div>
-				</div>
+		<div className='h-full bg-gradient-to-r from-white via-blue-400 to-white flex justify-center items-center flex-col gap-4 relative'>
+			<div className='font-bold text-3xl absolute top-5 text-slate-100'>
+				<p> DỰ ÁN KHOA HỌC KỸ THUẬT CẤP TỈNH</p>
+			</div>
+			<p className='font-medium text-white text-xl uppercase'>Trạng thái các ô tủ</p>
+			<div className='grid grid-cols-3 gap-6'>
+				{openStates.map((isOpen, index) => (
+					<div
+						key={index}
+						onClick={() => toggleState(index)} // Thêm sự kiện khi click vào ô
+						className={`w-36 h-36 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform 
+              ${isOpen ? "bg-green-400 scale-105" : "bg-black scale-95"} 
+              cursor-pointer flex justify-center items-center`}>
+						<span className='text-white text-2xl font-semibold'>
+							{isOpen ? <IconUnlock size={"large"} /> : <IconLock size={"large"} />}
+						</span>
+					</div>
+				))}
+			</div>
+			<div className='flex gap-2'>
+				<Button type='primary'>Thuê tủ</Button>
+				<Button>Thanh toán</Button>
 			</div>
 		</div>
 	);
