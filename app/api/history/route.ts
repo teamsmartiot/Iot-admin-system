@@ -6,7 +6,7 @@ import History from "@/models/History";
 connectToDatabase();
 
 // Xử lý GET request: Lấy danh sách người dùng
-export default async function GET() {
+export async function GET() {
 	try {
 		const Histories = await History.find();
 		return NextResponse.json(Histories, { status: 200 });

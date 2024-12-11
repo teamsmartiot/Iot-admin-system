@@ -6,7 +6,7 @@ import User from "@/models/User";
 connectToDatabase();
 
 // Xử lý GET request: Lấy danh sách người dùng
-export default async function GET() {
+export async function GET() {
 	try {
 		const users = await User.find();
 		return NextResponse.json(users, { status: 200 });

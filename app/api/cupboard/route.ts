@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 connectToDatabase();
 
 // Xử lý GET request: Lấy danh sách người dùng
-export default async function GET() {
+export async function GET() {
 	try {
 		const CupBoards = await CupBoard.find();
 		return NextResponse.json(CupBoards, { status: 200 });
