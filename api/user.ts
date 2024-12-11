@@ -5,6 +5,22 @@ export const addUser = async (data: any) => {
 		body: JSON.stringify(data),
 	});
 	const result = await res.json();
-	console.log("Fetched data: ", result);
 	return result;
+};
+
+export const getUser = async () => {
+	const res = await fetch(process.env.URL + "/api/user", { method: "GET" });
+	const result = await res.json();
+
+	return result;
+};
+
+export const deleteUser = async (userId: string) => {
+	const response = await fetch(process.env.URL + `/api/user/${userId}`, {
+		method: "DELETE",
+	});
+	if (!response.ok) {
+		throw new Error("Failed to delete user");
+	}
+	return response.json();
 };

@@ -32,7 +32,6 @@ const navItems = [
 export const NavBar = () => {
 	const router = useRouter();
 	const pathname = usePathname();
-	console.log("pathname", pathname);
 	return (
 		<>
 			{navItems.map((item) => {

@@ -8,17 +8,20 @@ import * as XLSX from "xlsx";
 
 const columns: Record<string, any>[] = [
 	{
+		title: "ID",
+		dataIndex: "_id",
+	},
+	{
 		title: "Tên",
-    dataIndex: "name",
-    
+		dataIndex: "name",
 	},
 	{
 		title: "Tủ",
-		dataIndex: "cabin",
+		dataIndex: "cupboard", // Renamed to match the schema field (previously 'cabin')
 	},
 	{
 		title: "ID vân tay",
-		dataIndex: "code",
+		dataIndex: "fingerprintId", // Renamed to match the schema field (previously 'code')
 	},
 	{
 		title: "Giới tính",
@@ -30,17 +33,16 @@ const columns: Record<string, any>[] = [
 	},
 	{
 		title: "Số điện thoại",
-		dataIndex: "mobile",
+		dataIndex: "phoneNumber", // Renamed to match the schema field (previously 'mobile')
 	},
-
 	{
 		title: "Ngày Thuê",
-		dataIndex: "date",
+		dataIndex: "rentDate", // Renamed to match the schema field (previously 'date' for "Ngày Thuê")
 		render: (value: any) => <>{dayjs(value).format("HH:mm:ss - DD/MM/YYYY")}</>,
 	},
 	{
 		title: "Ngày Trả",
-		dataIndex: "date",
+		dataIndex: "returnDate", // Renamed to match the schema field (previously 'date' for "Ngày Trả")
 		render: (value: any) => <>{dayjs(value).format("HH:mm:ss - DD/MM/YYYY")}</>,
 	},
 ];
@@ -75,9 +77,11 @@ export const TableHistory = () => {
 			<Table
 				loading={isPending}
 				className='flex-1'
-        columns={columns}
-        
-				dataSource={data?.map((item: any) => ({ key: Date.now(), ...item }))}
+				columns={columns}
+				pagination={{
+					pageSize: 8,
+				}}
+				dataSource={data?.map((item: any) => ({ key: item._id, ...item }))}
 				scroll={scroll}
 			/>
 		</div>

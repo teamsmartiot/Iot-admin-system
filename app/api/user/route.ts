@@ -37,18 +37,3 @@ export async function PUT(req: Request) {
 		return NextResponse.json({ error: error.message }, { status: 400 });
 	}
 }
-
-// Xử lý DELETE request: Xóa người dùng
-export async function DELETE(req: Request) {
-	try {
-		const url = new URL(req.url);
-		const id = url.searchParams.get("id");
-		if (!id) {
-			return NextResponse.json({ error: "Missing user ID" }, { status: 400 });
-		}
-		const deletedUser = await User.findByIdAndDelete(id);
-		return NextResponse.json(deletedUser, { status: 200 });
-	} catch (error: any) {
-		return NextResponse.json({ error: error.message }, { status: 500 });
-	}
-}
