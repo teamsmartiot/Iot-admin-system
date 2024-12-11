@@ -6,7 +6,10 @@ import User from "@/models/User";
 connectToDatabase();
 
 // Xử lý DELETE request: Xóa người dùng
-export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
+export default async function DELETE(
+	req: Request,
+	{ params }: { params: Promise<{ id: string }> }
+) {
 	try {
 		const id = (await params).id;
 		if (!id) {
@@ -18,5 +21,3 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
 		return NextResponse.json({ error: error.message }, { status: 500 });
 	}
 }
-
-export default DELETE;

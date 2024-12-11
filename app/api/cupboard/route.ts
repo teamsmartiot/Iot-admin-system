@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 connectToDatabase();
 
 // Xử lý GET request: Lấy danh sách người dùng
-export async function GET() {
+export default async function GET() {
 	try {
 		const CupBoards = await CupBoard.find();
 		return NextResponse.json(CupBoards, { status: 200 });
@@ -59,5 +59,3 @@ export async function DELETE(req: Request) {
 		return NextResponse.json({ error: error.message }, { status: 500 });
 	}
 }
-
-export default GET;
