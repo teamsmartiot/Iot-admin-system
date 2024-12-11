@@ -18,3 +18,5 @@ export async function DELETE(req: Request, { params }: { params: Promise<{ id: s
 		return NextResponse.json({ error: error.message }, { status: 500 });
 	}
 }
+
+export default DELETE;
