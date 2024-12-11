@@ -10,7 +10,7 @@ dayjs.locale("vi"); // Thiết lập ngôn ngữ tiếng Việt
 export const Home = () => {
 	const { data: cupboards } = useQuery({
 		queryKey: ["cupboards"],
-		queryFn: getCupboard,
+		queryFn: () => getCupboard(),
 		refetchInterval: 2000,
 	});
 
