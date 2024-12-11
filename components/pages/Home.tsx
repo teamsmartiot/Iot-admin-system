@@ -1,20 +1,18 @@
 "use client";
+import { getCupboard } from "@/api/cupboard";
 import { IconLock, IconUnlock } from "@douyinfe/semi-icons";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/vi";
-import { useState } from "react";
 dayjs.locale("vi"); // Thiết lập ngôn ngữ tiếng Việt
 
 export const Home = () => {
-	const [openStates, setOpenStates] = useState([false, true, true, true, true, false]);
-
-	// Hàm để thay đổi trạng thái đóng/mở của ô tủ
-	const toggleState = (index: number) => {
-		const newStates = [...openStates];
-		newStates[index] = !newStates[index];
-		setOpenStates(newStates);
-	};
+	const { data: cupboards } = useQuery({
+		queryKey: ["cupboards"],
+		queryFn: getCupboard,
+		refetchInterval: 2000,
+	});
 
 	return (
 		<div className='h-full bg-gradient-to-r from-white via-blue-400 to-white flex justify-center items-center flex-col gap-4 relative'>
@@ -23,15 +21,14 @@ export const Home = () => {
 			</div>
 			<p className='font-medium text-white text-xl uppercase'>Trạng thái các ô tủ</p>
 			<div className='grid grid-cols-3 gap-6'>
-				{openStates.map((isOpen, index) => (
+				{cupboards?.map((data: any) => (
 					<div
-						key={index}
-						onClick={() => toggleState(index)} // Thêm sự kiện khi click vào ô
+						key={data?._id}
 						className={`w-36 h-36 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform 
-              ${isOpen ? "bg-green-400 scale-105" : "bg-black scale-95"} 
+              ${!data?.fingerprintId ? "bg-green-400 scale-105" : "bg-black scale-95"} 
               cursor-pointer flex justify-center items-center`}>
 						<span className='text-white text-2xl font-semibold'>
-							{isOpen ? <IconUnlock size={"large"} /> : <IconLock size={"large"} />}
+							{!data?.fingerprintId ? <IconUnlock size={"large"} /> : <IconLock size={"large"} />}
 						</span>
 					</div>
 				))}
