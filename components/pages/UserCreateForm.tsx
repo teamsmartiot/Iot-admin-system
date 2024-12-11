@@ -11,8 +11,12 @@ export const UserCreateForm = () => {
 	const onFinish = async (data: any) => {
 		setLoading(true);
 		try {
-			await addUser(data).finally(() => setLoading(false));
-			toast.success("Đã thêm người dùng", { position: "top-center" });
+			await addUser(data)
+				.then(() => {
+					toast.success("Đã thêm người dùng", { position: "top-center" });
+				})
+				.finally(() => setLoading(false));
+
 			form.resetFields(); // Reset the form fields after successful submission
 		} catch {
 			toast.error("Lỗi thêm người dùng", { position: "top-center" });

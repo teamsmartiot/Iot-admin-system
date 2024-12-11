@@ -9,7 +9,7 @@ const UserSchema = new Schema(
 		email: { type: String, required: true },
 		phoneNumber: { type: String }, // Số điện thoại (optional)
 		registrationDate: { type: Date, default: Date.now }, // Ngày đăng ký (optional)
-		password: { type: String, required: true },
+		password: { type: String },
 	},
 	{ timestamps: true }
 );
