@@ -1,5 +1,5 @@
 "use client";
-import { deleteUser, getUser } from "@/api/user";
+import { deleteUser, getUser } from "@/apis/user";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"; // Thêm useMutation và useQueryClient
 import { Button, Table } from "antd"; // Thêm Spin để hiển thị loading
 import dayjs from "dayjs";

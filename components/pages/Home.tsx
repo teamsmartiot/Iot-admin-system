@@ -1,5 +1,5 @@
 "use client";
-import { getCupboard } from "@/api/cupboard";
+import { getCupboard } from "@/apis/cupboard";
 import { IconLock, IconUnlock } from "@douyinfe/semi-icons";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "antd";

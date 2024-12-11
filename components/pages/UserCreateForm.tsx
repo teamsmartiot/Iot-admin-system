@@ -1,5 +1,5 @@
 "use client";
-import { addUser } from "@/api/user"; // assuming addUser is a function for making API requests
+import { addUser } from "@/apis/user"; // assuming addUser is a function for making API requests
 import { Button, Form, Input, Select } from "antd";
 import { useState } from "react";
 import toast from "react-hot-toast";

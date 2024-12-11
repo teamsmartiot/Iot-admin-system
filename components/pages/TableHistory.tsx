@@ -1,5 +1,5 @@
 "use client";
-import { getHistory } from "@/api/history";
+import { getHistory } from "@/apis/history";
 import { useQuery } from "@tanstack/react-query";
 import { Table } from "antd";
 import dayjs from "dayjs";
