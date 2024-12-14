@@ -65,10 +65,6 @@ export const TableManageUser = () => {
 			dataIndex: "name",
 		},
 		{
-			title: "Tủ",
-			dataIndex: "cupboard", // Renamed to match the schema (previously 'cabin')
-		},
-		{
 			title: "ID Vân Tay",
 			dataIndex: "fingerprintId", // Renamed to match the schema (previously 'code')
 		},

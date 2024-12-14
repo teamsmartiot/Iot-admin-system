@@ -10,14 +10,14 @@ export const UserCreateForm = () => {
 	const { data: fingerprintData } = useQuery({
 		queryKey: ["fingerprint"],
 		queryFn: () => getFingerprint(),
-		refetchInterval: 2000,
+		refetchInterval: 1500,
 	});
 	const [loading, setLoading] = useState(false);
 
 	const onFinish = async (data: any) => {
 		setLoading(true);
 		try {
-			await addUser(data)
+			await addUser({ fingerprintId: fingerprintData?.fingerprintId, ...data })
 				.then(() => {
 					toast.success("Đã thêm người dùng", { position: "top-center" });
 				})
@@ -70,11 +70,6 @@ export const UserCreateForm = () => {
 
 				<div>
 					{/* Cupboard */}
-					<Form.Item
-						label={<span className='text-sm flex-1 text-black font-semibold'>Tủ</span>}
-						name='cupboard'>
-						<Input className='font-medium !text-black w-full flex-1 m-auto' />
-					</Form.Item>
 
 					{/* Fingerprint ID */}
 					<div className='flex flex-col mb-6 gap-2 flex-1'>
