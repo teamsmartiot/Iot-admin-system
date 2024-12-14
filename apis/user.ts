@@ -14,6 +14,14 @@ export const getUser = async () => {
 
 	return result;
 };
+export const getFingerprint = async () => {
+	const res = await fetch(process.env.URL + "/api/fingerprint", {
+		method: "GET",
+	});
+	const result = await res.json();
+
+	return result;
+};
 
 export const deleteUser = async (userId: string) => {
 	const response = await fetch(process.env.URL + `/api/user/${userId}`, {

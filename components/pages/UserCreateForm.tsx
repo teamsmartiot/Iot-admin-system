@@ -1,11 +1,17 @@
 "use client";
-import { addUser } from "@/apis/user"; // assuming addUser is a function for making API requests
+import { addUser, getFingerprint } from "@/apis/user"; // assuming addUser is a function for making API requests
+import { useQuery } from "@tanstack/react-query";
 import { Button, Form, Input, Select } from "antd";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 export const UserCreateForm = () => {
 	const [form] = Form.useForm();
+	const { data: fingerprintData } = useQuery({
+		queryKey: ["fingerprint"],
+		queryFn: () => getFingerprint(),
+		refetchInterval: 2000,
+	});
 	const [loading, setLoading] = useState(false);
 
 	const onFinish = async (data: any) => {
@@ -71,11 +77,14 @@ export const UserCreateForm = () => {
 					</Form.Item>
 
 					{/* Fingerprint ID */}
-					<Form.Item
-						label={<span className='text-sm flex-1 text-black font-semibold'>ID Vân Tay</span>}
-						name='fingerprintId'>
-						<Input className='font-medium !text-black w-full flex-1 m-auto' />
-					</Form.Item>
+					<div className='flex flex-col mb-6 gap-2 flex-1'>
+						<p className='font-medium'>ID vân tay</p>
+						<Input
+							value={fingerprintData.fingerprintId}
+							disabled
+							className='font-medium !text-black w-full m-auto'
+						/>
+					</div>
 
 					{/* Gender */}
 					<Form.Item
