@@ -80,7 +80,7 @@ export const UserCreateForm = () => {
 					<div className='flex flex-col mb-6 gap-2 flex-1'>
 						<p className='font-medium'>ID vân tay</p>
 						<Input
-							value={fingerprintData.fingerprintId}
+							value={fingerprintData?.fingerprintId}
 							disabled
 							className='font-medium !text-black w-full m-auto'
 						/>

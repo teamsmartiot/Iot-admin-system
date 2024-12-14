@@ -11,7 +11,7 @@ export async function GET(
 	{ params }: { params: Promise<{ fingerprintId: string }> }
 ) {
 	try {
-		const fingerprintId = (await params).fingerprintId;
+		const fingerprintId = (await params)?.fingerprintId;
 		const user = await User.findOne({ fingerprintId });
 		return NextResponse.json(user, { status: 200 });
 	} catch (error: any) {
