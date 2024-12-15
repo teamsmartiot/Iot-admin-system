@@ -23,7 +23,7 @@ export const UserCreateForm = () => {
 				})
 				.finally(() => setLoading(false));
 
-			form.resetFields(); // Reset the form fields after successful submission
+			form.resetFields(); 
 		} catch {
 			toast.error("Lỗi thêm người dùng", { position: "top-center" });
 			setLoading(false);
