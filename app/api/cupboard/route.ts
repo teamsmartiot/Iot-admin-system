@@ -49,7 +49,7 @@ export async function PUT(req: Request) {
 			email: user.email, // Email
 			phoneNumber: user.phoneNumber, // Số điện thoại
 			rentDate: new Date(), // Ngày Thuê
-			returnDate: null, // Ngày Trả
+			returnDate: "", // Ngày Trả
 		});
 
 		return NextResponse.json(updatedCupBoard, { status: 200 });

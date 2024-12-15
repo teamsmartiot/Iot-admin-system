@@ -19,20 +19,17 @@ export async function PUT(req: Request) {
 
 		const user = await User.findOne({ _id: id });
 
-		const cupboardRecord = await CupBoard.findOneAndUpdate(
+		const cup = await CupBoard.findOneAndUpdate(
 			{ fingerprintId: user.fingerprintId, cupboardId: cupboard },
-			{ fingerprintId: "" },
-			{ new: true }
+			{ fingerprintId: "", password: "" }
 		);
+		console.log("user", cup);
 		const newHistory = await History.findOneAndUpdate(
 			{ fingerprintId: user.fingerprintId, cupboardId: cupboard },
-			{ returnDate: new Date() },
-			{ new: true }
+			{ returnDate: new Date() }
 		);
-		await cupboardRecord.save();
-		await newHistory.save();
 
-		return NextResponse.json({}, { status: 201 });
+		return NextResponse.json(newHistory, { status: 201 });
 	} catch (error: any) {
 		return NextResponse.json({ error: error.message }, { status: 400 });
 	}
