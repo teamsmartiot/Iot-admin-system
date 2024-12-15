@@ -35,7 +35,9 @@ export const Home = () => {
 						}}
 						className={`w-36 h-36 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform 
               ${!data?.fingerprintId ? "bg-green-400 scale-105" : "bg-black scale-95"} 
-               ${data?.warning === "FIRE" && "!bg-red-500 animate-pulse duration-75"} 
+               ${
+									data?.warning === "FIRE" && "!bg-red-500 animate-pulse duration-75 cursor-pointer"
+								} 
               cursor-pointer flex justify-center items-center`}>
 						<span className='text-white text-2xl font-semibold flex flex-col justify-center items-center gap-2'>
 							{!data?.warning &&
