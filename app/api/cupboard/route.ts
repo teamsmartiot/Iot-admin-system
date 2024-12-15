@@ -1,5 +1,7 @@
 import connectToDatabase from "@/lib/mongodb";
 import CupBoard from "@/models/CupBoard";
+import History from "@/models/History";
+import User from "@/models/User";
 import { NextResponse } from "next/server";
 
 // Kết nối với MongoDB
@@ -30,14 +32,25 @@ export async function POST(req: Request) {
 export async function PUT(req: Request) {
 	try {
 		const body = await req.json();
-		const { cupboardId, ...updateData } = body; // Destructure cupboardId and leave the rest for updateData
+		const { uuid, cupboardId, ...updateData } = body; // Destructure cupboardId and leave the rest for updateData
 
+		const user = await User.findOne({ _id: uuid });
 		// Use findOneAndUpdate to find by cupboardId instead of _id
 		const updatedCupBoard = await CupBoard.findOneAndUpdate(
 			{ cupboardId }, // Find the cupboard by cupboardId
 			updateData, // Data to update
 			{ new: true } // Return the updated document
 		);
+		await History.create({
+			name: user.name, // Tên
+			cupboard: cupboardId, // Tủ
+			fingerprintId: updatedCupBoard.fingerprintId, // ID vân tay
+			gender: user.gender, // Giới tính
+			email: user.email, // Email
+			phoneNumber: user.phoneNumber, // Số điện thoại
+			rentDate: new Date(), // Ngày Thuê
+			returnDate: null, // Ngày Trả
+		});
 
 		return NextResponse.json(updatedCupBoard, { status: 200 });
 	} catch (error: any) {
