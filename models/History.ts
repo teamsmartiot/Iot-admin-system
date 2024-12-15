@@ -8,8 +8,8 @@ const HistorySchema = new Schema(
 		gender: { type: String }, // Giới tính
 		email: { type: String, required: true }, // Email
 		phoneNumber: { type: String }, // Số điện thoại
-		rentDate: { type: Date }, // Ngày Thuê
-		returnDate: { type: Date }, // Ngày Trả
+		rentDate: { type: String }, // Ngày Thuê
+		returnDate: { type: String }, // Ngày Trả
 	},
 	{ timestamps: true }
 );
