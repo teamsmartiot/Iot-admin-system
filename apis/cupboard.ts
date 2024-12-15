@@ -14,3 +14,10 @@ export const fixCupboard = async (id: string) => {
 
 	return result;
 };
+
+export const openForceCupboard = async (id: string) => {
+	const res = await fetch(process.env.URL + `/api/cupboard/open/${id}`, { method: "POST" });
+	const result = await res.json();
+
+	return result;
+};

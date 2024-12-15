@@ -1,5 +1,5 @@
 "use client";
-import { fixCupboard, getCupboard } from "@/apis/cupboard";
+import { fixCupboard, getCupboard, openForceCupboard } from "@/apis/cupboard";
 import { IconAlertCircle, IconLock, IconUnlock } from "@douyinfe/semi-icons";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "antd";
@@ -17,6 +17,9 @@ export const Home = () => {
 	const handleFire = (id: string) => {
 		fixCupboard(id);
 	};
+	const handOpenCupboard = (id: string) => {
+		openForceCupboard(id);
+	};
 
 	return (
 		<div className='h-full bg-gradient-to-r from-white via-blue-400 to-white flex justify-center items-center flex-col gap-4 relative'>
@@ -33,7 +36,7 @@ export const Home = () => {
 								handleFire(data?.cupboardId);
 							}
 						}}
-						className={`w-36 h-36 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform 
+						className={`w-36 h-36 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform relative
               ${!data?.fingerprintId ? "bg-green-400 scale-105" : "bg-black scale-95"} 
                ${
 									data?.warning === "FIRE" && "!bg-red-500 animate-pulse duration-75 cursor-pointer"
@@ -51,6 +54,16 @@ export const Home = () => {
 								<p className='font-semibold text-sm text-center'> Nhấp vào khi bạn đã xử lý cháy</p>
 							)}
 						</span>
+						{!!data?.fingerprintId && (
+							<div className='flex justify-center items-center absolute bottom-2'>
+								<Button
+									type='dashed'
+									className=' z-10 m-auto right-0'
+									onClick={() => handOpenCupboard(data?.cupboardId)}>
+									Mở khóa
+								</Button>
+							</div>
+						)}
 					</div>
 				))}
 			</div>
