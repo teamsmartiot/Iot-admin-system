@@ -1,6 +1,6 @@
 "use client";
-import { getCupboard } from "@/apis/cupboard";
-import { IconLock, IconUnlock } from "@douyinfe/semi-icons";
+import { fixCupboard, getCupboard } from "@/apis/cupboard";
+import { IconAlertCircle, IconLock, IconUnlock } from "@douyinfe/semi-icons";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "antd";
 import dayjs from "dayjs";
@@ -14,6 +14,10 @@ export const Home = () => {
 		refetchInterval: 2000,
 	});
 
+	const handleFire = (id: string) => {
+		fixCupboard(id);
+	};
+
 	return (
 		<div className='h-full bg-gradient-to-r from-white via-blue-400 to-white flex justify-center items-center flex-col gap-4 relative'>
 			<div className='font-bold text-3xl absolute top-5 text-slate-100'>
@@ -24,11 +28,26 @@ export const Home = () => {
 				{cupboards?.map((data: any) => (
 					<div
 						key={data?._id}
+						onClick={() => {
+							if (data?.warning === "FIRE") {
+								handleFire(data?.cupboardId);
+							}
+						}}
 						className={`w-36 h-36 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform 
               ${!data?.fingerprintId ? "bg-green-400 scale-105" : "bg-black scale-95"} 
+               ${data?.warning === "FIRE" && "!bg-red-500 animate-pulse duration-75"} 
               cursor-pointer flex justify-center items-center`}>
-						<span className='text-white text-2xl font-semibold'>
-							{!data?.fingerprintId ? <IconUnlock size={"large"} /> : <IconLock size={"large"} />}
+						<span className='text-white text-2xl font-semibold flex flex-col justify-center items-center gap-2'>
+							{!data?.warning &&
+								(!data?.fingerprintId ? (
+									<IconUnlock size={"large"} />
+								) : (
+									<IconLock size={"large"} />
+								))}
+							{data?.warning === "FIRE" && <IconAlertCircle size={"large"} />}
+							{data?.warning === "FIRE" && (
+								<p className='font-semibold text-sm text-center'> Nhấp vào khi bạn đã xử lý cháy</p>
+							)}
 						</span>
 					</div>
 				))}

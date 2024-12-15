@@ -6,3 +6,11 @@ export const getCupboard = async () => {
 
 	return result;
 };
+
+
+export const fixCupboard = async (id: string) => {
+	const res = await fetch(process.env.URL + `/api/cupboard/fire/${id}`, { method: "PUT" });
+	const result = await res.json();
+
+	return result;
+};
