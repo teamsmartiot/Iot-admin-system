@@ -5,6 +5,7 @@ const CupBoardSchema = new Schema(
 		cupboardId: { type: String, required: true }, // Tủ (optional)
 		fingerprintId: { type: String }, // ID Vân Tay (optional)
 		password: { type: String },
+		warning: { type: String },
 	},
 	{ timestamps: true }
 );
