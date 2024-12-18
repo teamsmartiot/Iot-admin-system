@@ -19,13 +19,12 @@ export async function PUT(req: Request) {
 
 		const user = await User.findOne({ _id: id });
 
-		const cup = await CupBoard.findOneAndUpdate(
+		await CupBoard.findOneAndUpdate(
 			{ fingerprintId: user.fingerprintId, cupboardId: cupboard },
 			{ fingerprintId: "", password: "" }
 		);
-		console.log("user", cup);
 		const newHistory = await History.findOneAndUpdate(
-			{ fingerprintId: user.fingerprintId, cupboardId: cupboard },
+			{ fingerprintId: user.fingerprintId, cupboard: cupboard },
 			{ returnDate: new Date() }
 		);
 
