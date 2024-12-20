@@ -42,7 +42,7 @@ export async function PUT(req: Request) {
 			const cost = durationInMinutes * 1000;
 		  
 			// Return the cost along with other relevant data in the response
-			return NextResponse.json({ cost: cost }, { status: 201 });
+			return NextResponse.json({ cost: cost.toLocaleString()+"VND" }, { status: 201 });
 		}
 		return NextResponse.json({ cost: 0 }, { status: 201 });
 	} catch (error: any) {
