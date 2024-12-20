@@ -39,12 +39,27 @@ const columns: Record<string, any>[] = [
 		title: "Ngày Thuê",
 		dataIndex: "rentDate", // Renamed to match the schema field (previously 'date' for "Ngày Thuê")
 		render: (value: any) => <>{dayjs(value).format("HH:mm:ss - DD/MM/YYYY")}</>,
-	},
-	{
+	  },
+	  {
 		title: "Ngày Trả",
 		dataIndex: "returnDate", // Renamed to match the schema field (previously 'date' for "Ngày Trả")
 		render: (value: any) => <>{dayjs(value).format("HH:mm:ss - DD/MM/YYYY")}</>,
-	},
+	  },
+	  {
+		title: "Tiền",
+		dataIndex: "rentDate", // Using rentDate to calculate the time difference
+		render: (value: any, record: any) => {
+		  // Calculate the duration between rentDate and returnDate
+		  const rentDate = dayjs(record.rentDate);
+		  const returnDate = dayjs(record.returnDate);
+		  const durationInMinutes = returnDate.diff(rentDate, 'minute'); // Duration in minutes
+		  
+		  // Multiply the duration by 1000 VND per minute
+		  const cost = durationInMinutes * 1000;
+	  
+		  return <>{cost.toLocaleString()} VND</>; // Format the cost with thousands separator
+		},
+	  }
 ];
 
 export const TableHistory = () => {
