@@ -41,16 +41,19 @@ export async function PUT(req: Request) {
 			updateData, // Data to update
 			{ new: true } // Return the updated document
 		);
-		await History.create({
-			name: user.name, // Tên
-			cupboard: cupboardId, // Tủ
-			fingerprintId: updatedCupBoard.fingerprintId, // ID vân tay
-			gender: user.gender, // Giới tính
-			email: user.email, // Email
-			phoneNumber: user.phoneNumber, // Số điện thoại
-			rentDate: new Date(), // Ngày Thuê
-			returnDate: "", // Ngày Trả
-		});
+		if(updatedCupBoard.fingerprintId)
+		{
+			await History.create({
+				name: user.name, // Tên
+				cupboard: cupboardId, // Tủ
+				fingerprintId: updatedCupBoard.fingerprintId, // ID vân tay
+				gender: user.gender, // Giới tính
+				email: user.email, // Email
+				phoneNumber: user.phoneNumber, // Số điện thoại
+				rentDate: new Date(), // Ngày Thuê
+				returnDate: "", // Ngày Trả
+			});
+		}
 
 		return NextResponse.json(updatedCupBoard, { status: 200 });
 	} catch (error: any) {
