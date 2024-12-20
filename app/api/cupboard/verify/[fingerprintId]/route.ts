@@ -14,7 +14,6 @@ export async function GET(
 	try {
 		const fingerprintId = (await params)?.fingerprintId;
 		const user = await User.findOne({ fingerprintId });
-		console.log("user", user);
 		const cupboard = await CupBoard.findOne({ fingerprintId });
 		return NextResponse.json(
 			{ uid: user._id, cupboard: cupboard?.cupboardId, password: cupboard?.password },

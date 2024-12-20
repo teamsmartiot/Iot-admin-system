@@ -25,7 +25,7 @@ export async function PUT(req: Request) {
 			{ fingerprintId: "", password: "" }
 		);
 		const historyUpdated = await History.findOneAndUpdate(
-			{ fingerprintId: user.fingerprintId, cupboard: cupboard },
+			{ fingerprintId: user.fingerprintId, cupboard: cupboard, email:user.email},
 			{ returnDate: new Date() },
 			{ new: true } // Ensure that the updated document is returned
 		  );
