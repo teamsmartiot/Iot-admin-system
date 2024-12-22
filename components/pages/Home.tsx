@@ -24,7 +24,8 @@ export const Home = () => {
 	return (
 		<div className='h-full bg-gradient-to-r from-white via-blue-400 to-white flex justify-center items-center flex-col gap-4 relative'>
 			<div className='font-bold text-3xl absolute top-5 text-slate-100'>
-				<p> DỰ ÁN KHOA HỌC KỸ THUẬT CẤP TỈNH</p>
+				<p> Cuộc thi KHKT cấp tỉnh học sinh trung học năm học 
+2024-2025</p>
 			</div>
 			<p className='font-medium text-white text-xl uppercase'>Trạng thái các ô tủ</p>
 			<div className='grid grid-cols-3 gap-6'>
@@ -66,10 +67,6 @@ export const Home = () => {
 						)}
 					</div>
 				))}
-			</div>
-			<div className='flex gap-2'>
-				<Button type='primary'>Thuê tủ</Button>
-				<Button>Thanh toán</Button>
 			</div>
 		</div>
 	);
