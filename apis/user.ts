@@ -32,3 +32,13 @@ export const deleteUser = async (userId: string) => {
 	}
 	return response.json();
 };
+
+export const clearUser = async () => {
+	const response = await fetch(process.env.URL + `/api/user/clear`, {
+		method: "DELETE",
+	});
+	if (!response.ok) {
+		throw new Error("Failed to delete user");
+	}
+	return response.json();
+};
