@@ -31,12 +31,49 @@ export const TableManageUser = () => {
 		},
 	});
 
+
 	const downloadExcel = (data: any) => {
-		const worksheet = XLSX.utils.json_to_sheet(data);
+		// Vietnamese headers for the schema fields
+		const vietnameseHeaders: any = {
+			_id: "ID", // MongoDB _id field
+			name: "Tên", // Tên người dùng
+			fingerprintId: "ID Vân Tay", // ID Vân Tay
+			gender: "Giới Tính", // Giới tính
+			email: "Email", // Email người dùng
+			phoneNumber: "Số Điện Thoại", // Số điện thoại
+			registrationDate: "Ngày Đăng Ký", // Ngày đăng ký
+		};
+
+		// Map data to reflect Vietnamese headers and format dates
+		const dataWithVietnameseHeaders = data.map((item: any) => {
+			const mappedItem: any = {};
+
+			// Iterate over each key in the item
+			Object.keys(item).forEach((key) => {
+				const vietnameseHeader = vietnameseHeaders[key] || key; // Use Vietnamese header or original key
+
+				// Format date fields using dayjs if the key is a date field
+				if (key === "registrationDate") {
+					mappedItem[vietnameseHeader] = dayjs(item[key]).format("DD/MM/YYYY"); // Format registration date
+				} else {
+					mappedItem[vietnameseHeader] = item[key]; // Copy other fields as is
+				}
+			});
+
+			return mappedItem;
+		});
+
+		// Create a worksheet from the mapped data
+		const worksheet = XLSX.utils.json_to_sheet(dataWithVietnameseHeaders);
+
+		// Create a new workbook and append the worksheet to it
 		const workbook = XLSX.utils.book_new();
 		XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+		// Write the Excel file
 		XLSX.writeFile(workbook, "data.xlsx");
 	};
+
 
 	// Hàm xử lý xóa người dùng
 	const handleDelete = (record: any) => {

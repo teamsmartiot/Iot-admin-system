@@ -80,14 +80,50 @@ export const TableHistory = () => {
 
 	const scroll = useMemo(() => ({ y: "80vh" }), []);
 
-	const downloadExcel = (data: any) => {
-		const worksheet = XLSX.utils.json_to_sheet(data);
-		const workbook = XLSX.utils.book_new();
-		XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-		//let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
-		//XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
-		XLSX.writeFile(workbook, "data.xlsx");
+const downloadExcel = (data: any) => {
+	// Define the Vietnamese headers for the fields
+	const vietnameseHeaders: any = {
+		_id: "ID",
+		name: "Tên",
+		cupboard: "Tủ",
+		fingerprintId: "ID Vân Tay",
+		gender: "Giới Tính",
+		email: "Email",
+		phoneNumber: "Số Điện Thoại",
+		rentDate: "Ngày Thuê",
+		returnDate: "Ngày Trả",
 	};
+
+	// Map data to reflect Vietnamese headers and format dates
+	const dataWithVietnameseHeaders = data.map((item: any) => {
+		const mappedItem: any = {};
+
+		// Iterate through each key of the item and map to Vietnamese headers
+		Object.keys(item).forEach((key) => {
+			const vietnameseHeader = vietnameseHeaders[key] || key; // Use Vietnamese header or the original key if not found
+
+			if (key === "rentDate" || key === "returnDate") {
+				// Format dates using dayjs if the key is rentDate or returnDate
+				mappedItem[vietnameseHeader] = dayjs(item[key]).format("DD/MM/YYYY");
+			} else {
+				mappedItem[vietnameseHeader] = item[key]; // Otherwise, just copy the value
+			}
+		});
+
+		return mappedItem;
+	});
+
+	// Create a worksheet from the mapped data
+	const worksheet = XLSX.utils.json_to_sheet(dataWithVietnameseHeaders);
+
+	// Create a new workbook and append the worksheet to it
+	const workbook = XLSX.utils.book_new();
+	XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+	// Write the Excel file
+	XLSX.writeFile(workbook, "data.xlsx");
+};
+
 
 	return (
 		<div className='h-full flex flex-col gap-2 p-4'>
