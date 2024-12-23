@@ -24,9 +24,9 @@ export const Home = () => {
 	return (
 		<div className='h-full bg-gradient-to-r from-white via-blue-400 to-white flex justify-center items-center flex-col gap-4 relative'>
 			<div className='font-bold text-4xl absolute top-5 text-center mt-7 text-white drop-shadow-lg uppercase'>
+				<p> Cuộc thi KHKT cấp tỉnh học sinh trung học năm học 2024-2025</p>
+
 				<p>Trường THPT Hòn Đất </p>
-				<p> Cuộc thi KHKT cấp tỉnh học sinh trung học </p>
-				<p>năm học 2024-2025</p>
 			</div>
 			<p className='font-medium text-white text-xl uppercase'>Trạng thái các ô tủ</p>
 			<div className='grid grid-cols-3 gap-6'>
