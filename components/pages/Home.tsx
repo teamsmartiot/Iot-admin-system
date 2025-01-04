@@ -23,12 +23,15 @@ export const Home = () => {
 
 	return (
 		<div className='h-full bg-gradient-to-r from-blue-100 via-blue-400 to-blue-500 flex justify-center items-center flex-col gap-4 relative'>
-			<div className='font-bold  absolute top-5 text-center mt-7 text-white drop-shadow-lg uppercase'>
-				<p className='text-4xl'> Cuộc thi KHKT cấp tỉnh học sinh trung học năm học 2024-2025</p>
-
-				<p className='mt-4 text-3xl'>Trường THPT Hòn Đất </p>
+			<div className='font-bold  absolute px-6 top-5 text-center mt-7 text-white drop-shadow-lg uppercase'>
+				<p className=' text-3xl'>Trường THPT Hòn Đất </p>
+				<p className='text-5xl leading-[50px] my-4'>
+					{" "}
+					Cuộc thi KHKT cấp tỉnh học sinh trung học năm học 2024-2025
+				</p>
+				<p className='text-2xl font-semibold'>DỰ ÁN TỦ CHO THUÊ CÔNG CỘNG THÔNG MINH</p>
 			</div>
-			<p className='font-medium text-white text-xl uppercase'>Trạng thái các ô tủ</p>
+			<p className='font-medium text-white text-xl uppercase mt-4'>Trạng thái các ô tủ</p>
 			<div className='grid grid-cols-3 gap-6'>
 				{cupboards?.map((data: any) => (
 					<div
