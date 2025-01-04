@@ -11,7 +11,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "IOT HÒN ĐÂT - KIÊN GIANG",
+	title: "IOT HÒN ĐẤT - KIÊN GIANG",
 	description: "",
 	icons: ["https://i.ibb.co/yPd0Rmm/cc43759b3c44861adf55-removebg-preview.png"],
 };
