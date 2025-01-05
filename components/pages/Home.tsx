@@ -25,10 +25,16 @@ export const Home = () => {
 		<div className='h-full bg-gradient-to-r from-blue-100 via-blue-400 to-blue-500 flex justify-center items-center flex-col gap-4 relative'>
 			<div className='font-bold  absolute px-6 top-5 text-center mt-7 text-white drop-shadow-lg uppercase'>
 				<p className=' text-3xl'>Trường THPT Hòn Đất </p>
-				<p className='text-5xl leading-[50px] my-4'>
-					{" "}
-					Cuộc thi KHKT cấp tỉnh học sinh trung học năm học 2024-2025
-				</p>
+				<div className='my-4'>
+					<p className='text-5xl leading-[50px]'>
+						
+						Cuộc thi KHKT cấp tỉnh học sinh trung học
+					</p>
+					<p className='text-5xl leading-[50px]'>
+						năm học 2024-2025
+					</p>
+				</div>
+				
 				<p className='text-2xl font-semibold'>DỰ ÁN TỦ CHO THUÊ CÔNG CỘNG THÔNG MINH</p>
 			</div>
 			<p className='font-medium text-white text-xl uppercase mt-4'>Trạng thái các ô tủ</p>
