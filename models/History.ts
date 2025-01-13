@@ -6,7 +6,7 @@ const HistorySchema = new Schema(
 		cupboard: { type: String }, // Tủ
 		fingerprintId: { type: String }, // ID vân tay
 		gender: { type: String }, // Giới tính
-		email: { type: String, required: true }, // Email
+		email: { type: String }, // Email
 		phoneNumber: { type: String }, // Số điện thoại
 		rentDate: { type: Date }, // Ngày Thuê
 		returnDate: { type: Date }, // Ngày Trả

@@ -52,11 +52,7 @@ export const UserCreateForm = () => {
 					{/* Email */}
 					<Form.Item
 						label={<span className='text-sm flex-1 text-black font-semibold'>Email</span>}
-						name='email'
-						rules={[
-							{ required: true, message: "Email là bắt buộc" },
-							{ pattern: /^\S+@\S+$/i, message: "Email không hợp lệ" },
-						]}>
+						name='email'>
 						<Input className='font-medium !text-black w-full flex-1 m-auto' />
 					</Form.Item>
 
