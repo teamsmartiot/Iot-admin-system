@@ -93,7 +93,7 @@ export const UserCreateForm = () => {
 						<Button
 							loading={loading}
 							htmlType='submit'
-							className='bg-black/50 w-full ml-auto !text-black hover:!text-white hover:!bg-blue-500 transition-all duration-150 ease-out rounded-sm'>
+							className='bg-black/50 w-full ml-auto mt-[30px] !text-black hover:!text-white hover:!bg-blue-500 transition-all duration-150 ease-out rounded-sm'>
 							Đăng ký
 						</Button>
 					</Form.Item>
